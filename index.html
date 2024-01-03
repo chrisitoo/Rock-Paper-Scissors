@@ -9,6 +9,11 @@
    
 <script> 
     
+    let userWins = 0;
+    let computerWins = 0;
+    let ties = 0;
+    let gameCount = 0;
+
     function getComputerChoice(){
         let choiceNum = Math.floor(Math.random() * 3);
 
@@ -27,30 +32,39 @@
         if(playerSelection.toUpperCase() === 'ROCK' || playerSelection.toUpperCase() === 'PAPER' || playerSelection.toUpperCase() === 'SCISSORS') {
                 if(playerSelection.toUpperCase() === 'ROCK') { // IF player selects Rock
                     if(computerSelection === 'Paper'){
-                        return 'You lose! Paper beats Rock!';
+                        computerWins++;
+                        return alert('You lose! Paper beats Rock!');
                     } else if (computerSelection === 'Scissors'){
-                        return 'You win! Rock beats Scissors!';
+                        userWins++;
+                        return alert('You win! Rock beats Scissors!');
                     } else {
-                        return 'Tie! Play again.';
+                        ties++;
+                        return alert('Tie! Play again.');
                     }
 
                 } 
                else if(playerSelection.toUpperCase() === 'PAPER'){ // IF player selects Paper
                     if(computerSelection === 'Rock'){
-                        return 'You win! Paper beats Rock!';
+                        userWins++;
+                        return alert('You win! Paper beats Rock!');
                     } else if(computerSelection === 'Scissors'){
-                        return 'You lose! Scissors beats Paper';
+                        computerWins++;
+                        return alert('You lose! Scissors beats Paper');
                     } else {
-                        return 'Tie! Play again.';
+                        ties++;
+                        return alert('Tie! Play again.');
                     }
                 }
                else if(playerSelection.toUpperCase() === 'SCISSORS'){ // IF player Selects Scissors
                     if(computerSelection === 'Rock'){
-                        return 'You lose! Rock beats Scissors';
+                        computerWins++;
+                        return alert('You lose! Rock beats Scissors');
                     } else if(computerSelection === 'Paper'){
-                        return 'You win! Scissors beats Paper';
+                        userWins++;
+                        return alert('You win! Scissors beats Paper');
                     } else {
-                        return 'Tie! Play again.';
+                        ties++;
+                        return alert('Tie! Play again.');
                     }
                 }
             
@@ -58,12 +72,33 @@
 
     }
 
-    let playerSelection = 'Scissors';
-    let computerSelection = getComputerChoice();
+    function game(){
 
-    console.log(playRound(playerSelection, computerSelection));
+        let gameActive = true;
+
+        while(gameActive) {
+        
+            let playerSelection = prompt("Rock, Papers, or Scissors?");
+
+            playRound(playerSelection, getComputerChoice());
+            gameCount++;
+
+            if((gameCount == 5 || (userWins === 3 && userWins > computerWins) || (computerWins == 3 && computerWins > userWins))){
+                gameActive = false;
+            }
+
+        }
 
 
+
+    }
+
+    game();
+
+    alert("Computer Wins: " + computerWins + "\n" +
+         "User Wins: " + userWins + "\n" +
+         "Game Count: " + gameCount + "\n" +
+         "Ties: " + ties);
 
 
 </script>
